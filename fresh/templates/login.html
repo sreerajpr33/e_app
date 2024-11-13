@@ -10,15 +10,16 @@
   <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="col-md-4">
       <h3 class="text-center mb-4 text-dark">LOGIN</h3>
-      <form>
+      <form action="" method="post">
+        {% csrf_token %}
         <div class="mb-3">
-          <label for="email" class="form-label text-light"><b>Email address</b></label>
-          <input type="email" class="form-control" id="email" placeholder="Enter your email">
+          <label for="email" class="form-label text-light"><b>name</b></label>
+          <input type="text" class="form-control" name="uname" placeholder="name">
         </div>
         
         <div class="mb-3">
           <label for="password" class="form-label text-light"><b>Password</b></label>
-          <input type="password" class="form-control" id="password" placeholder="Enter your password">
+          <input type="password" class="form-control" name="password" placeholder="Enter your password">
         </div>
         
         <button type="submit" class="btn btn-primary w-100">Login</button>
