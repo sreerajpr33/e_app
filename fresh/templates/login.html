@@ -23,6 +23,14 @@
         </div>
         
         <button type="submit" class="btn btn-primary w-100">Login</button>
+        {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-danger">
+            <strong>incorrect username or wassword! </strong> 
+            <!-- {{message}} -->
+          </div>
+          {% endfor %}
+          {% endif %}
       </form>
 
       <div class="text-center mt-3">
