@@ -13,7 +13,7 @@
       <form action="" method="post">
         {% csrf_token %}
         <div class="mb-3">
-          <label for="email" class="form-label text-light"><b>name</b></label>
+          <label for="email" class="form-label text-light"><b>email</b></label>
           <input type="text" class="form-control" name="uname" placeholder="name">
         </div>
         
@@ -23,18 +23,17 @@
         </div>
         
         <button type="submit" class="btn btn-primary w-100">Login</button>
-        {% if messages %}
+      </form>
+      {% if messages %}
           {% for message in messages %}
           <div class="alert alert-danger">
             <strong>incorrect username or wassword! </strong> 
-            <!-- {{message}} -->
+            {{message}}
           </div>
           {% endfor %}
           {% endif %}
-      </form>
-
       <div class="text-center mt-3">
-        <a href="./register.html" class="text-decoration-none text-light">Register Now</a>
+        <a href="register" class="text-decoration-none text-light">Register Now</a>
       </div>
     </div>
   </div>

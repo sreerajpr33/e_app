@@ -7,6 +7,8 @@ urlpatterns=[
     path('add_product',views.addproduct),
     path('editproduct/<pid>',views.editproduct),
     path('delete_product/<pid>',views.delete_pro),
+    path('register',views.register),
+    path('user_name',views.user_home)
 ]
 
 
