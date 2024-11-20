@@ -114,3 +114,8 @@ def user_home(req):
         return render(req,'user/userhome.html',{'products':data})
     else:
         return redirect(fresh_login)
+    
+def details(req):
+    data=product.objects.all()
+    return render(req,'user/details.html',{'products':data})
+
