@@ -115,7 +115,17 @@ def user_home(req):
     else:
         return redirect(fresh_login)
     
-def details(req):
-    data=product.objects.all()
+def details(req,pid):
+    data=product.objects.get(pk=pid)
     return render(req,'user/details.html',{'products':data})
+
+def add_to_cart(req,pid):
+    Product=product.objects.get(pk=pid)
+    user=User.objects.get(username=req.session['user'])
+    data=cart.objects.create(Product=Product,user=user,qty=1)
+    data.save()
+    return redirect(view_cart)
+
+def view_cart(req):
+    return render(req,'user/cart.html')
 
