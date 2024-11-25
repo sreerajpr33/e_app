@@ -12,7 +12,12 @@ urlpatterns=[
     path('user_name',views.user_home),
     path('details/<pid>',views.details),
     path('addcart/<pid>',views.add_to_cart),
-    path('viewcart',views.view_cart)
+    path('viewcart',views.view_cart),
+    path('qty_in/<cid>',views.qty_in),
+    path('qty_dec/<cid>',views.qty_dec),
+    path('cart_pro_buy/<cid>',views.cart_pro_buy),
+    path('bookings',views.bookings),
+    path('pro_buy/<pid>',views.pro_buy),
 ]
 
 

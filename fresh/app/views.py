@@ -19,6 +19,8 @@ def shop_home(req):
 def fresh_login(req):
     if 'shop' in req.session:
         return redirect(shop_home)
+    if 'user' in req.session:
+        return redirect(user_home)
     if req.method=='POST':
         uname=req.POST['uname']
         password=req.POST['password']
@@ -38,7 +40,7 @@ def fresh_login(req):
         return render(req,'login.html')
     
 def freash_logout(req):
-    if 'shop' in req.session:
+    if 'shop' in req.session or 'user' in req.session:
         logout(req)
         req.session.flush()
         return redirect(fresh_login)
@@ -122,10 +124,60 @@ def details(req,pid):
 def add_to_cart(req,pid):
     Product=product.objects.get(pk=pid)
     user=User.objects.get(username=req.session['user'])
-    data=cart.objects.create(Product=Product,user=user,qty=1)
-    data.save()
+    try:
+        Cart=cart.objects.get(Product=Product,user=user)
+        Cart.qty+=1
+        Cart.save()
+    except:
+        data=cart.objects.create(Product=Product,user=user,qty=1)
+        data.save()
     return redirect(view_cart)
 
 def view_cart(req):
-    return render(req,'user/cart.html')
+    user=User.objects.get(username=req.session['user'])
+    data=cart.objects.filter(user=user)
+    return render(req,'user/cart.html',{'cart':data})
+
+def qty_in(req,cid):
+    data=cart.objects.get(pk=cid)
+    data.qty+=1
+    data.save()
+    return redirect(view_cart)
+
+def qty_dec(req,cid):
+    data=cart.objects.get(pk=cid)
+    data.qty-=1
+    data.save()
+    print(data.qty)
+    if data.qty==0:
+        data.delete()
+    return redirect(view_cart)
+
+def cart_pro_buy(req,cid):
+    Cart=cart.objects.get(pk=cid)
+    product=Cart.Product
+    user=cart.user
+    qty=cart.qty
+    price=product.offer_price*qty
+    Buy=buy.objects.create(product=product,user=user,qty=qty,price=price)
+    Buy.save()
+    return redirect(bookings)
+
+def pro_buy(req,pid):
+    Product=product.objects.get(pk=pid)
+    user=User.objects.get(username=req.session['user'])
+    qty=1
+    price=Product.offer_price
+    Buy=buy.objects.create(product=Product,user=user,qty=qty,price=price)
+    Buy.save()
+    return redirect(bookings)
+
+def bookings(req):
+    user=User.objects.get(username=req.session['user'])
+    Buy=buy.objects.filter(user=user)[::-1]
+    return render(req,'user/bookings.html',{'bookings':Buy})
+
+
+
+
 

@@ -16,3 +16,11 @@ class cart(models.Model):
     Product=models.ForeignKey(product,on_delete=models.CASCADE)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     qty=models.IntegerField()
+
+class buy(models.Model):
+    product=models.ForeignKey(product,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    qty=models.IntegerField()
+    price=models.IntegerField()
+    data=models.DateTimeField(auto_now_add=True)
+    
